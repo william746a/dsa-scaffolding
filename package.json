@@ -1,0 +1,27 @@
+{
+  "name": "dsa-scaffolding",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Scaffold-fading DSA practice: five rungs, one test gate per rung.",
+  "engines": {
+    "node": ">=22.6"
+  },
+  "scripts": {
+    "drill": "node harness/runner.ts run",
+    "status": "node harness/status.ts",
+    "hint": "node harness/runner.ts hint",
+    "pick": "node harness/runner.ts pick",
+    "reveal": "node harness/runner.ts reveal",
+    "test": "node harness/runner.ts run",
+    "test:all": "node --test drills/",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2"
+  },
+  "imports": {
+    "#harness/*": "./harness/*"
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "current": "structures/insertion-sort-linked-list/01-insert-into-sorted",
+  "drills": {
+    "structures/insertion-sort-linked-list/01-insert-into-sorted": {
+      "rung": 5,
+      "cleared": 5,
+      "failStreak": 0,
+      "hints": 1,
+      "regressions": 1,
+      "rung5StartedAt": "2026-09-12T22:56:09.076Z",
+      "rung5Seconds": 12,
+      "log": [
+        {
+          "at": "2026-09-10T16:28:31.844Z",
+          "rung": 1,
+          "event": "fail"
+        },
+        {
+          "at": "2026-09-10T16:31:44.888Z",
+          "rung": 1,
+          "event": "fail"
+        },
+        {
+          "at": "2026-09-10T16:51:38.923Z",
+          "rung": 1,
+          "event": "pass"
+        },
+        {
+          "at": "2026-09-10T20:29:08.303Z",
+          "rung": 2,
+          "event": "pass"
+        },
+        {
+          "at": "2026-09-11T14:08:52.549Z",
+          "rung": 3,
+          "event": "pass"
+        },
+        {
+          "at": "2026-09-11T14:36:29.093Z",
+          "rung": 4,
+          "event": "pass"
+        },
+        {
+          "at": "2026-09-11T14:36:29.094Z",
+          "rung": 5,
+          "event": "open"
+        },
+        {
+          "at": "2026-09-12T22:36:38.470Z",
+          "rung": 5,
+          "event": "fail"
+        },
+        {
+          "at": "2026-09-12T22:38:00.837Z",
+          "rung": 5,
+          "event": "hint"
+        },
+        {
+          "at": "2026-09-12T22:50:44.462Z",
+          "rung": 5,
+          "event": "fail"
+        },
+        {
+          "at": "2026-09-12T22:50:44.462Z",
+          "rung": 4,
+          "event": "regress"
+        },
+        {
+          "at": "2026-09-12T22:56:09.076Z",
+          "rung": 4,
+          "event": "pass"
+        },
+        {
+          "at": "2026-09-12T22:56:09.076Z",
+          "rung": 5,
+          "event": "open"
+        },
+        {
+          "at": "2026-09-12T22:56:21.423Z",
+          "rung": 5,
+          "event": "pass"
+        }
+      ]
+    }
+  }
+}
