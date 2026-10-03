@@ -15,6 +15,21 @@ function insertionSortList(head: ListNode | null): ListNode | null;
 // nodes are relinked, not copied.
 ```
 
+## Harness-facing complexity declaration
+
+This is assessment metadata, not part of the sorting function's runtime API.
+The final-rung scaffold supplies this object; fill its blank value before
+writing the implementation:
+
+```ts
+export const complexity: Record<string, string> = {
+  insertionSortList: "",
+};
+```
+
+Fill the blank with the complexity stated in the public API above. The harness
+validates this declaration before it runs behavior cases.
+
 ## The invariant
 
 At every point during the algorithm, split the world into two parts: the

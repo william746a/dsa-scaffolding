@@ -1,9 +1,13 @@
 #!/usr/bin/env node
 /** Visible progress: the shrinking scaffold is the motivational signal. */
 
-import { discoverDrills, loadProgress } from "./progress.ts";
+import {
+  discoverDrills,
+  finalRung,
+  ladderFor,
+  loadProgress,
+} from "./progress.ts";
 import { title } from "./gate.ts";
-import { RUNGS } from "./types.ts";
 
 const p = loadProgress();
 const drills = discoverDrills();
@@ -25,16 +29,21 @@ for (const d of drills) {
   const cleared = s?.cleared ?? 0;
   const at = s?.rung ?? 1;
   const started = Boolean(s) && (cleared > 0 || p.current === d.id);
-  const ladder = RUNGS.map((r) =>
+  const final = finalRung(d);
+  const ladder = ladderFor(d).map((r) =>
     r <= cleared ? "█" : started && r === at ? "▓" : "░",
   ).join("");
   const marks = [
     s?.hints ? `${s.hints} hint${s.hints > 1 ? "s" : ""}` : "",
     s?.regressions ? `${s.regressions} regression${s.regressions > 1 ? "s" : ""}` : "",
-    s?.rung5Seconds ? `${(s.rung5Seconds / 60).toFixed(1)} min cold` : "",
+    final === 7 && s?.rung7Seconds
+      ? `${(s.rung7Seconds / 60).toFixed(1)} min cold`
+      : final === 5 && s?.rung5Seconds
+        ? `${(s.rung5Seconds / 60).toFixed(1)} min cold`
+        : "",
   ].filter(Boolean).join(", ");
   const marker = p.current === d.id ? "→" : " ";
-  const done = cleared === 5 ? " ✔" : "";
+  const done = cleared === final ? " ✔" : "";
   console.log(
     `${marker} ${ladder} ${d.index}/${d.setSize} ${d.unit}${done}` +
       (marks ? `   (${marks})` : ""),

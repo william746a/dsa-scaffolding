@@ -1,14 +1,15 @@
-/**
- * Rung 5 — Blank Page. Cold and timed.
- *
- * You get ../API.md and nothing else. Write the whole Graph class here, from
- * scratch, and export it.
- *
- * State the complexities BEFORE you write the code — the harness checks them
- * first, and an implementation you cannot characterise has not cleared this
- * rung. Fill in and export:
- *
- *   export const complexity = { addEdge: "", neighbors: "" };
- */
+import { TODO } from "#harness/verify.ts";
+import type { GraphState } from "../spec.ts";
 
-export {};
+/**
+ * Rung 5 — Independent Full Body.
+ *
+ * Implement neighbors only. Required behaviors, in no prescribed order:
+ * return [] for an unknown vertex; return a fresh array; preserve uniqueness;
+ * and order the result ascending. Target complexity: O(deg(v) log deg(v)).
+ */
+export function neighbors(state: GraphState, v: number): number[] {
+  let stored = state.adj.get(v);
+  if (!stored) return [];
+  return [...stored].sort((a, b) => a - b);
+}

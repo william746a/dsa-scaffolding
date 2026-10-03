@@ -12,6 +12,36 @@ class MinHeap {
 }
 ```
 
+## Harness-facing complexity declaration
+
+This is assessment metadata, not a `MinHeap` member. The Rung 7 scaffold
+supplies the `complexity` export and its exact keys; fill its blank value(s)
+before writing the implementation. The non-final repair drills declare exactly
+the operation being assessed:
+
+```ts
+// 01-sift-up
+export const complexity: Record<string, string> = { siftUp: "" };
+
+// 02-sift-down
+export const complexity: Record<string, string> = { siftDown: "" };
+```
+
+Both repair operations target `O(log n)`. The final `03-pop` whole-API
+capstone declares exactly every checked public operation:
+
+```ts
+export const complexity: Record<string, string> = {
+  push: "",
+  pop: "",
+  peek: "",
+  size: "",
+};
+```
+
+Fill each blank with the corresponding complexity stated in the public API
+above. The harness validates this declaration before it runs behavior cases.
+
 ## The invariant
 
 The array is a complete binary tree stored level by level: the children of

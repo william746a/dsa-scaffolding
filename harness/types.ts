@@ -2,12 +2,23 @@
 
 export type Track = "patterns" | "structures";
 
-/** 1 = most scaffolding, 5 = blank page. */
-export type Rung = 1 | 2 | 3 | 4 | 5;
+/** 1 = most scaffolding, 7 = blank page in the current ladder. */
+export type Rung = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
-export const RUNGS: readonly Rung[] = [1, 2, 3, 4, 5];
+export const RUNGS: readonly Rung[] = [1, 2, 3, 4, 5, 6, 7];
+export const LEGACY_RUNGS: readonly Rung[] = [1, 2, 3, 4, 5];
 
 export const RUNG_NAMES: Record<Rung, string> = {
+  1: "Isolated Move",
+  2: "Supporting Logic",
+  3: "Signature Move",
+  4: "Guided Reconstruction",
+  5: "Independent Full Body",
+  6: "Interface Skeleton",
+  7: "Blank Page",
+};
+
+export const LEGACY_RUNG_NAMES: Readonly<Record<1 | 2 | 3 | 4 | 5, string>> = {
   1: "Isolated Move",
   2: "Supporting Logic",
   3: "Signature Move",
@@ -49,10 +60,12 @@ export interface DrillState {
   hints: number;
   /** Times this drill regressed a rung; feeds the adaptive-start rule. */
   regressions: number;
-  /** ISO timestamp when Rung 5 was opened, for the cold-and-timed gate. */
+  /** Legacy five-rung timing fields. Retained for completed older drills. */
   rung5StartedAt: string | null;
-  /** Seconds taken to clear Rung 5, once cleared. */
   rung5Seconds: number | null;
+  /** Current seven-rung timing fields for the final blank-page gate. */
+  rung7StartedAt: string | null;
+  rung7Seconds: number | null;
   log: LogEntry[];
 }
 
@@ -71,12 +84,16 @@ export interface Progress {
 export function emptyState(startRung: Rung = 1): DrillState {
   return {
     rung: startRung,
-    cleared: 0,
+    // Adaptive start skips the warm-up rungs; they count as cleared, or the
+    // gate would lock the very rung the learner was started on.
+    cleared: (startRung - 1) as 0 | Rung,
     failStreak: 0,
     hints: 0,
     regressions: 0,
     rung5StartedAt: null,
     rung5Seconds: null,
+    rung7StartedAt: null,
+    rung7Seconds: null,
     log: [],
   };
 }

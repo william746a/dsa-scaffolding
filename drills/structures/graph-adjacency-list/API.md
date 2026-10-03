@@ -13,6 +13,47 @@ class Graph {
 }
 ```
 
+During the operation drills, the harness supplies construction and composes
+one operation at a time around this shared representation:
+
+```ts
+interface GraphState {
+  readonly directed: boolean;
+  readonly adj: Map<number, Set<number>>;
+}
+
+function addEdge(state: GraphState, u: number, v: number): void;
+function neighbors(state: GraphState, v: number): number[];
+```
+
+That callable form keeps each ladder scoped to one function. After both
+operations have appeared, the final Rung 7 is the capstone: reconstruct the
+complete `Graph` API shown above in one file.
+
+## Harness-facing complexity declaration
+
+This is assessment metadata, not a `Graph` method. The Rung 7 scaffold supplies
+the `complexity` export and its exact keys; fill its blank value(s) before
+writing the implementation. A non-final operation declares exactly its own key:
+
+```ts
+export const complexity: Record<string, string> = {
+  addEdge: "",
+};
+```
+
+The final whole-API capstone declares exactly every checked operation:
+
+```ts
+export const complexity: Record<string, string> = {
+  addEdge: "",
+  neighbors: "",
+};
+```
+
+Fill each blank with the corresponding complexity stated in the public API
+above. The harness validates this declaration before it runs behavior cases.
+
 ## The invariant
 
 `directed` is fixed at construction and never changes. After `addEdge(u, v)`:
@@ -45,13 +86,14 @@ order is observable.
 ## Operations in this set
 
 1. `01-add-edge` — insert an edge, respecting directed vs. undirected
-2. `02-neighbors` — hand back the neighbor list under the contract above
+2. `02-neighbors` — hand back the neighbor list under the contract above;
+   its final rung is the complete `Graph` capstone
 
 ## After this set clears
 
-The anchored check-in is **LeetCode 1971, "Find if Path Exists in Graph"**
-(Easy) — build a `Graph` from the given edge list, then determine
-reachability between two vertices. That's a new problem, not a repeat of
-this drill; the structure it consumes is what you just built.
+The anchored check-in is **LeetCode 997, "Find the Town Judge"** (Easy) —
+build a directed `Graph` from the given trust list, then answer from what
+the edges say about each person. That's a new problem, not a repeat of this
+drill; the structure it consumes is what you just built.
 
 Do not read ahead. `npm run drill` says where you are.

@@ -1,8 +1,8 @@
 import { TODO } from "#harness/verify.ts";
 
 /**
- * Rung 4 — Full Body.
- * One whole method body, contract only.
+ * Rung 4 — Guided Reconstruction.
+ * Rebuild the method from ordered behavioral checkpoints.
  *
  * Target operation: pop()
  * Invariant to preserve: every node is <= both of its children.
@@ -25,10 +25,14 @@ export class MinHeap {
   }
 
   pop(): number | undefined {
-    // Remove and return the smallest value, or undefined if empty.
-    // Postcondition: the invariant holds and size has dropped by one.
-    // O(log n). Must not throw on an empty heap.
-    TODO("the whole pop body");
+    if (TODO("whether no value can be removed")) return undefined;
+    const removed = TODO("the value the operation must return");
+    const replacement = TODO("remove one value that can fill the root position");
+    if (TODO("whether any heap entries remain")) {
+      TODO("place the replacement where the removed value lived");
+      TODO("restore the ordering invariant from that position");
+    }
+    return TODO("the removed minimum value");
   }
 
   private parent(i: number): number {

@@ -1,8 +1,8 @@
 import { TODO } from "#harness/verify.ts";
 
 /**
- * Rung 4 — Full Body.
- * One whole function body, contract only.
+ * Rung 4 — Guided Reconstruction.
+ * Rebuild the function from ordered behavioral checkpoints.
  *
  * Target operation: insertionSortList()
  * Invariant to preserve: the sorted portion stays sorted, and every node
@@ -30,9 +30,12 @@ function insertOne(sortedHead: ListNode | null, node: ListNode): ListNode {
 }
 
 export function insertionSortList(head: ListNode | null): ListNode | null {
-  // Precondition: head starts an arbitrary singly linked list, sorted or
-  // not. insertOne is available and correct.
-  // Postcondition: returns the head of the same nodes, sorted ascending.
-  // O(n^2) time, O(1) extra space.
-  TODO("the whole insertionSortList body");
+  let sorted: ListNode | null = null;
+  let cur = head;
+  while (cur !== null) {
+    const remaining = TODO("preserve access to the unprocessed nodes");
+    sorted = TODO("incorporate cur into the sorted portion");
+    cur = TODO("advance to the preserved unprocessed portion");
+  }
+  return TODO("the head of the fully sorted list");
 }

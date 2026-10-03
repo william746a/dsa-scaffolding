@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Scaffold-fading DSA practice: five rungs, one test gate per rung.",
+  "description": "Scaffold-fading DSA practice: seven rungs, one test gate per rung.",
   "engines": {
     "node": ">=22.6"
   },

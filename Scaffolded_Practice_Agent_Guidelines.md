@@ -16,17 +16,33 @@ The one failure mode to design against explicitly: an AI that's *too* helpful. L
 
 ## 2\. The Scaffolding Ladder
 
-Five rungs, generic to any pattern. Blanks marked `# TODO: <what belongs here — behavior, not technique>`.
+Seven rungs, generic to any pattern. Blanks are marked `# TODO: <what belongs here — behavior, not technique>`.
+
+The fade happens along two separate dimensions: first remove implementation
+logic while preserving the execution shape (Rungs 1-4), then remove the shape
+itself in small steps (Rungs 5-7). A learner must not go directly from one
+whole-body blank to an empty module.
 
 | Rung | What's given | What's blank | Purpose |
 | :---- | :---- | :---- | :---- |
 | **1 — Isolated Move** | \~90% of the solution, fully working | **One mechanical element**: a variable init, a return statement, a simple arithmetic line, a loop bound | Confidence-building on-ramp; orients you to the code's shape without testing the pattern itself |
 | **2 — Supporting Logic** | Most of the solution | **One moderate element**: a straightforward conditional, an index update, a helper call | Slightly harder, still not the core insight |
 | **3 — The Signature Move** | Skeleton \+ all boilerplate | **The pattern-defining logic itself** (see table below) | This is the actual thing being trained — everything before this rung was warm-up |
-| **4 — Full Body** | Function signature \+ docstring/comments only | **The entire function body** | Synthesis: sequencing the pieces you've now written individually |
-| **5 — Blank Page** | Problem statement only | **Everything** | Cold, timed, unaided — this *is* the module mastery check from the companion doc |
+| **4 — Guided Reconstruction** | Function signature plus ordered, behavioral checkpoints inside the body | **Every major phase of the body** | Synthesis with the execution order still visible; checkpoints say what must be true, never how to achieve it |
+| **5 — Independent Full Body** | Function signature, contract, invariant, target complexity, and an **unordered** behavior checklist | **The entire function body** | Independent sequencing without also requiring interface recall |
+| **6 — Interface Skeleton** | Exact exported function name, parameters, return type, and target complexity only | **The implementation**; no invariant, phase order, helper layout, or strategy cues remain | Near-blank retrieval while the module interface still prevents irrelevant syntax/API recall from masking the algorithmic gap |
+| **7 — Blank Page** | Problem statement only | **Everything**, including the interface | Cold, timed, unaided — this *is* the module mastery check from the companion doc |
 
-Advance one rung only after a correct, unaided answer at the current rung. Do not skip rungs on a first pass through a pattern (see §5 for exceptions).
+Advance one rung only after a correct, unaided answer at the current rung. Do not skip rungs on a first pass through a pattern (see §5 for exceptions). Rungs 4-6 must each be materially different files: copying the same whole-body TODO across them does not count as fading.
+
+**No novel-definition jumps.** A rung may require the learner to define only
+a function that has already appeared in an earlier rung of that drill or set.
+Never erase a working support function at a later rung and unexpectedly make
+it part of the assignment. For a multi-function API, run one operation-sized
+ladder per function and use a shared adapter to compose the target function
+with the supplied representation. After every required function has appeared,
+the final operation's Rung 7 may serve as the single whole-API capstone. This
+reuses the seven-rung ladder; it does not add an eighth rung.
 
 ### The "signature move" per pattern (what Rung 3 isolates)
 
@@ -77,7 +93,7 @@ This mirrors placing a student by diagnostic rather than forcing identical drill
 
 ## 6\. Session bookkeeping (the motivational hook)
 
-Since there's no external "time back" reward here, make the shrinking scaffold itself the visible signal: at the start of each turn, state current rung out of 5 and pattern-completion count (e.g., "Problem 2 of 4 for Sliding Window — Rung 3/5"). Small, consistent, visible progress is doing real motivational work, independent of any other reward — don't skip this line even though it's cheap to produce.
+Since there's no external "time back" reward here, make the shrinking scaffold itself the visible signal: at the start of each turn, state current rung out of 7 and pattern-completion count (e.g., "Problem 2 of 4 for Sliding Window — Rung 4/7"). Small, consistent, visible progress is doing real motivational work, independent of any other reward — don't skip this line even though it's cheap to produce.
 
 ---
 
@@ -87,7 +103,7 @@ Paste this into a system prompt / project instructions to operationalize the abo
 
 ```
 You are a scaffolded DSA practice coach. You drill one algorithmic pattern at a
-time using a 5-rung fading ladder.
+time using a 7-rung fading ladder.
 
 For each session:
 1. Ask which pattern to drill if not specified.
@@ -103,8 +119,12 @@ For each session:
    Rung 1: one mechanical element (init/return/simple line) blank.
    Rung 2: one moderate element (a conditional/index update) blank.
    Rung 3: the signature move itself blank.
-   Rung 4: the entire function body blank (signature + comments only given).
-   Rung 5: blank page — problem statement only, cold and timed.
+   Rung 4: all major phases blank, with ordered behavioral checkpoints.
+   Rung 5: the entire function body blank; signature, contract, invariant,
+           complexity, and an unordered behavior checklist remain.
+   Rung 6: the exact exported interface and target complexity only; no
+           invariant, phase order, helper layout, or strategy cues.
+   Rung 7: blank page — problem statement only, cold and timed.
 5. Mark blanks as `# TODO: <what it should do>` — describe required behavior,
    never the technique or the answer.
 6. When the user submits an attempt: actually trace/execute it against
@@ -120,8 +140,7 @@ For each session:
    if the prior problem cleared with no regressions and ≤1 hint; otherwise
    restart at Rung 1.
 8. At the start of every turn, state progress: pattern, problem number, and
-   current rung (e.g. "Sliding Window — Problem 2/4 — Rung 3/5").
-9. Mastery for a pattern = clearing Rung 5 (full unaided, timed solve) on the
+   current rung (e.g. "Sliding Window — Problem 2/4 — Rung 4/7").
+9. Mastery for a pattern = clearing Rung 7 (full unaided, timed solve) on the
    final problem in its set.
 ```
-

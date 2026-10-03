@@ -18,13 +18,15 @@ import {
   ROOT,
   currentDrill,
   discoverDrills,
+  finalRung,
   findDrill,
   loadProgress,
+  rungName,
   saveProgress,
   stateFor,
 } from "./progress.ts";
 import { progressLine, title } from "./gate.ts";
-import { RUNG_NAMES, type Rung } from "./types.ts";
+import { type Rung } from "./types.ts";
 
 const TIME_BOX_MIN = 25; // Liemandt block length, used as a soft signal only.
 
@@ -67,8 +69,10 @@ switch (cmd) {
     saveProgress(p);
     console.log(progressLine(meta!.id));
     console.log(
-      `\nRung ${state.rung} — ${RUNG_NAMES[state.rung]}\n` +
-        `Problem statement: ${rel(join(meta!.dir, "PROBLEM.md"))}\n` +
+      `\nRung ${state.rung} — ${rungName(meta!, state.rung)}\n` +
+        `${meta!.track === "patterns" ? "Problem statement" : "API specification"}: ` +
+        `${rel(join(meta!.dir, meta!.track === "patterns" ? "PROBLEM.md" : "../API.md"))}\n` +
+        finalRequirements() +
         `Fill the TODOs in:  ${rel(scaffoldFile())}\n` +
         `Then:               npm run drill\n\n` +
         `No solution is printed here, by design.`,
@@ -87,12 +91,15 @@ function run(): void {
         `Ask the coach to scaffold rung ${state.rung} for this drill.`,
     );
   }
-  if (state.rung === 5 && !state.rung5StartedAt) openRung5();
+  if (state.rung === finalRung(meta!) && !finalStartedAt()) openFinalRung();
 
   console.log(progressLine(meta!.id));
   console.log(`Running ${rel(file)}\n`);
 
-  const res = spawnSync(process.execPath, ["--test", file], {
+  // Each gate module registers tests through node:test. Execute it directly so
+  // assertion details remain visible; wrapping one test module in another
+  // `node --test` process collapses failures to an unhelpful "test failed".
+  const res = spawnSync(process.execPath, [file], {
     stdio: "inherit",
     cwd: ROOT,
   });
@@ -105,16 +112,17 @@ function onPass(): void {
   state.failStreak = 0;
   state.log.push({ at: now(), rung, event: "pass" });
 
-  if (rung === 5) {
-    if (state.rung5StartedAt) {
-      state.rung5Seconds = Math.round(
-        (Date.now() - Date.parse(state.rung5StartedAt)) / 1000,
-      );
+  const final = finalRung(meta!);
+  if (rung === final) {
+    if (finalStartedAt()) {
+      setFinalSeconds(Math.round(
+        (Date.now() - Date.parse(finalStartedAt()!)) / 1000,
+      ));
     }
     saveProgress(p);
-    const mins = ((state.rung5Seconds ?? 0) / 60).toFixed(1);
+    const mins = ((finalSeconds() ?? 0) / 60).toFixed(1);
     console.log(
-      `\n✔ Rung 5 cleared — cold, unaided, ${mins} min` +
+      `\n✔ Rung ${final} cleared — cold, unaided, ${mins} min` +
         (Number(mins) > TIME_BOX_MIN ? ` (over the ${TIME_BOX_MIN}-min box)` : ``) +
         `.\n${unitLabel()} ${meta!.index}/${meta!.setSize} of ${title(meta!.topic)} is done.`,
     );
@@ -128,10 +136,10 @@ function onPass(): void {
   }
 
   state.rung = (rung + 1) as Rung;
-  if (state.rung === 5) openRung5();
+  if (state.rung === final) openFinalRung();
   saveProgress(p);
   console.log(
-    `\n✔ Rung ${rung} cleared. Advancing to Rung ${state.rung} — ${RUNG_NAMES[state.rung]}.\n` +
+    `\n✔ Rung ${rung} cleared. Advancing to Rung ${state.rung} — ${rungName(meta!, state.rung)}.\n` +
       `Open: ${rel(scaffoldFile())}`,
   );
 }
@@ -149,15 +157,15 @@ function onFail(): void {
     saveProgress(p);
     console.log(
       `\n✘ Second failure at Rung ${from}. Regressing to Rung ${state.rung} — ` +
-        `${RUNG_NAMES[state.rung]}.\nThat is a real gap, not a slip. Open: ${rel(scaffoldFile())}`,
+        `${rungName(meta!, state.rung)}.\nThat is a real gap, not a slip. Open: ${rel(scaffoldFile())}`,
     );
   } else {
     saveProgress(p);
     console.log(
       `\n✘ Rung ${state.rung} not cleared (failure ${state.failStreak} of 2).\n` +
-        (state.rung === 5
-        ? `Rung 5 is a blank page: ${rel(scaffoldFile())} must export the ` +
-          `names the test imports.\n`
+        (state.rung === finalRung(meta!)
+        ? `The final rung is a blank page: ${rel(scaffoldFile())} must export the ` +
+          `names the test imports.\n` + finalRequirements()
         : ``) +
       `Read the assertion above and fix ${rel(scaffoldFile())}.\n` +
         `Stuck? npm run hint — the coach diagnoses why it fails, never what to write.`,
@@ -166,9 +174,37 @@ function onFail(): void {
   process.exitCode = 1;
 }
 
-function openRung5(): void {
-  state.rung5StartedAt = now();
-  state.log.push({ at: now(), rung: 5, event: "open" });
+function finalRequirements(): string {
+  if (meta!.track !== "structures" || state.rung !== finalRung(meta!)) return "";
+  return (
+    "Harness declaration: fill the blank values in the scaffolded `complexity` " +
+    "object before the implementation; API.md lists the required values.\n"
+  );
+}
+
+function openFinalRung(): void {
+  const final = finalRung(meta!);
+  const opened = now();
+  if (final === 7) state.rung7StartedAt = opened;
+  else state.rung5StartedAt = opened;
+  state.log.push({ at: opened, rung: final, event: "open" });
+}
+
+function finalStartedAt(): string | null {
+  return finalRung(meta!) === 7
+    ? state.rung7StartedAt ?? null
+    : state.rung5StartedAt ?? null;
+}
+
+function finalSeconds(): number | null {
+  return finalRung(meta!) === 7
+    ? state.rung7Seconds ?? null
+    : state.rung5Seconds ?? null;
+}
+
+function setFinalSeconds(seconds: number): void {
+  if (finalRung(meta!) === 7) state.rung7Seconds = seconds;
+  else state.rung5Seconds = seconds;
 }
 
 /** The test that gates the current rung. */

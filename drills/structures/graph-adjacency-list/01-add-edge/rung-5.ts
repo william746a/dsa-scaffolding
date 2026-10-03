@@ -1,14 +1,27 @@
-/**
- * Rung 5 — Blank Page. Cold and timed.
- *
- * You get ../API.md and nothing else. Write the whole Graph class here, from
- * scratch, and export it.
- *
- * State the complexities BEFORE you write the code — the harness checks them
- * first, and an implementation you cannot characterise has not cleared this
- * rung. Fill in and export:
- *
- *   export const complexity = { addEdge: "", neighbors: "" };
- */
+import { TODO } from "#harness/verify.ts";
+import type { GraphState } from "../spec.ts";
 
-export {};
+/**
+ * Rung 5 — Independent Full Body.
+ *
+ * Implement addEdge only. Required behaviors, in no prescribed order:
+ * - make u -> v observable;
+ * - mirror the edge exactly when the graph is undirected;
+ * - tolerate unseen vertices and keep duplicate calls idempotent.
+ *
+ * Target complexity: O(1) amortized.
+ */
+export function addEdge(
+  state: GraphState,
+  u: number,
+  v: number,
+): void {
+  let forward = state.adj.get(u) ?? new Set<number>();
+  forward.add(v);
+  state.adj.set(u, forward);
+  if (!state.directed) {
+    let reverse = state.adj.get(v) ?? new Set<number>();
+    reverse.add(u);
+    state.adj.set(v, reverse);
+  }
+}

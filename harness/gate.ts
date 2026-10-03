@@ -4,18 +4,45 @@
  * actually gone green through the runner.
  */
 
-import { loadProgress, findDrill, stateFor } from "./progress.ts";
-import { type DrillId, type Rung, RUNG_NAMES } from "./types.ts";
+import {
+  discoverDrills,
+  finalRung,
+  loadProgress,
+  findDrill,
+  rungName,
+  stateFor,
+} from "./progress.ts";
+import { type DrillId, type Rung } from "./types.ts";
 
 export function requireRung(id: DrillId, rung: Rung): void {
   const p = loadProgress();
+  const meta = findDrill(id);
   const state = stateFor(id, p);
-  if (rung <= 1) return;
-  if (state.cleared < rung - 1) {
+  if (rung > 1 && state.cleared < rung - 1) {
     throw new Error(
-      `Rung ${rung} (${RUNG_NAMES[rung]}) is locked for ${id}.\n` +
+      `Rung ${rung} (${rungName(meta, rung)}) is locked for ${id}.\n` +
         `  Cleared so far: rung ${state.cleared || "none"}.\n` +
         `  Clear rung ${rung - 1} first:  npm run drill`,
+    );
+  }
+
+  const isStructureCapstone =
+    meta.track === "structures" &&
+    meta.index === meta.setSize &&
+    rung === finalRung(meta);
+  if (!isStructureCapstone) return;
+
+  const incomplete = discoverDrills().find((candidate) =>
+    candidate.track === meta.track &&
+    candidate.topic === meta.topic &&
+    candidate.index < meta.index &&
+    (p.drills[candidate.id]?.cleared ?? 0) < finalRung(candidate)
+  );
+  if (incomplete) {
+    throw new Error(
+      `Rung ${rung} (${rungName(meta, rung)}) is the whole-API capstone for ${id}.\n` +
+        `  Earlier operation not cleared: ${incomplete.id}.\n` +
+        `  Clear every operation in this set before writing the complete API file.`,
     );
   }
 }
@@ -29,7 +56,7 @@ export function progressLine(id: DrillId): string {
   const label = meta.track === "patterns" ? "" : ` (${meta.unit})`;
   return (
     `${title(meta.topic)} — ${unit} ${meta.index}/${meta.setSize}${label}` +
-    ` — Rung ${state.rung}/5`
+    ` — Rung ${state.rung}/${finalRung(meta)}`
   );
 }
 

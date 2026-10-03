@@ -1,43 +1,23 @@
 import { TODO } from "#harness/verify.ts";
+import type { GraphState } from "../spec.ts";
 
 /**
  * Rung 1 — Isolated Move.
- * Everything works except one mechanical line.
- *
- * Target operation: addEdge()
- * Invariant to preserve: after addEdge(u, v), v is in neighbors(u); if the
- * graph is undirected, u is also in neighbors(v).
- * Full API and layout: ../API.md
+ * Everything in addEdge works except one mechanical allocation.
+ * Full public API: ../API.md
  */
-export class Graph {
-  private adj = new Map<number, Set<number>>();
+export function addEdge(
+  state: GraphState,
+  u: number,
+  v: number,
+): void {
+  const forward = state.adj.get(u) ?? new Set<number>();
+  state.adj.set(u, forward);
+  forward.add(v);
 
-  private readonly directed: boolean;
-
-  constructor(directed: boolean) {
-    this.directed = directed;
-  }
-
-  private ensureVertex(v: number): Set<number> {
-    const existing = this.adj.get(v);
-    if (existing) return existing;
-    const created = TODO("a fresh, empty neighbor set — v has never been seen before");
-    this.adj.set(v, created);
-    return created;
-  }
-
-  private insertOneWay(u: number, v: number): void {
-    this.ensureVertex(u).add(v);
-  }
-
-  addEdge(u: number, v: number): void {
-    this.insertOneWay(u, v);
-    if (!this.directed) this.insertOneWay(v, u);
-  }
-
-  neighbors(v: number): number[] {
-    const s = this.adj.get(v);
-    if (!s) return [];
-    return [...s].sort((a, b) => a - b);
+  if (!state.directed) {
+    const reverse = state.adj.get(v) ?? new Set<number>();
+    state.adj.set(v, reverse);
+    reverse.add(u);
   }
 }

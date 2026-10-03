@@ -42,6 +42,31 @@ export function drive(Ctor: HeapCtor, ops: readonly Op[]): Out[] {
   return out;
 }
 
+export type SiftUpOperation = (a: number[], i: number) => void;
+export type SiftDownOperation = (a: number[], i: number) => void;
+
+/** Exercise siftUp in isolation against a prepared array. */
+export function driveSiftUp(
+  siftUp: SiftUpOperation,
+  initial: readonly number[],
+  i: number,
+): number[] {
+  const a = [...initial];
+  siftUp(a, i);
+  return a;
+}
+
+/** Exercise siftDown in isolation against a prepared array. */
+export function driveSiftDown(
+  siftDown: SiftDownOperation,
+  initial: readonly number[],
+  i: number,
+): number[] {
+  const a = [...initial];
+  siftDown(a, i);
+  return a;
+}
+
 const push = (...vs: number[]): Op[] => vs.map((v) => ["push", v] as const);
 const drain = (n: number): Op[] => Array.from({ length: n }, () => ["pop"] as const);
 
@@ -108,6 +133,68 @@ export const cases: readonly Case<[readonly Op[]], Out[]>[] = [
     name: "200 scrambled values drain in sorted order",
     args: [[...push(...stress), ...drain(stress.length)]],
     want: [...stress].sort((a, b) => a - b),
+    edge: true,
+  },
+];
+
+export const siftUpCases: readonly Case<[readonly number[], number], number[]>[] = [
+  {
+    name: "bubbles a violating leaf up past two ancestors",
+    args: [[1, 5, 2, 9, 6, 0], 5],
+    want: [0, 5, 1, 9, 6, 2],
+  },
+  {
+    name: "value already satisfies the invariant: no movement",
+    args: [[1, 2, 3], 2],
+    want: [1, 2, 3],
+  },
+  {
+    name: "root index has nowhere to go",
+    args: [[5], 0],
+    want: [5],
+    edge: true,
+  },
+  {
+    name: "equal to parent stays put (invariant uses <=)",
+    args: [[2, 2, 2], 2],
+    want: [2, 2, 2],
+    edge: true,
+  },
+  {
+    name: "bubbles all the way to the root",
+    args: [[3, 4, 5, 6, 7, 1], 5],
+    want: [1, 4, 3, 6, 7, 5],
+    edge: true,
+  },
+];
+
+export const siftDownCases: readonly Case<[readonly number[], number], number[]>[] = [
+  {
+    name: "root sinks two levels, taking the smaller child each time",
+    args: [[9, 2, 3, 4, 5], 0],
+    want: [2, 4, 3, 9, 5],
+  },
+  {
+    name: "value already satisfies the invariant: no movement",
+    args: [[1, 5, 6], 0],
+    want: [1, 5, 6],
+  },
+  {
+    name: "single element has no children",
+    args: [[5], 0],
+    want: [5],
+    edge: true,
+  },
+  {
+    name: "only a left child exists at this node",
+    args: [[5, 10, 3, 1], 1],
+    want: [5, 1, 3, 10],
+    edge: true,
+  },
+  {
+    name: "equal children stay put (invariant uses strict <)",
+    args: [[1, 1, 1], 0],
+    want: [1, 1, 1],
     edge: true,
   },
 ];

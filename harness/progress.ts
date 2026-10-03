@@ -10,6 +10,10 @@ import {
   type Progress,
   type Rung,
   type Track,
+  LEGACY_RUNGS,
+  LEGACY_RUNG_NAMES,
+  RUNGS,
+  RUNG_NAMES,
   emptyState,
 } from "./types.ts";
 
@@ -65,6 +69,27 @@ export function findDrill(id: DrillId): DrillMeta {
 }
 
 /**
+ * Drills authored before the seven-rung revision remain runnable as five-rung
+ * legacy drills. Presence of the final test opts a drill into the new ladder,
+ * which lets in-progress work migrate one drill at a time without rewriting
+ * learner files or progress.json.
+ */
+export function ladderFor(meta: DrillMeta): readonly Rung[] {
+  return existsSync(join(meta.dir, "rung-7.test.ts")) ? RUNGS : LEGACY_RUNGS;
+}
+
+export function finalRung(meta: DrillMeta): Rung {
+  return ladderFor(meta).at(-1)!;
+}
+
+export function rungName(meta: DrillMeta, rung: Rung): string {
+  if (finalRung(meta) === 5 && rung <= 5) {
+    return LEGACY_RUNG_NAMES[rung as 1 | 2 | 3 | 4 | 5];
+  }
+  return RUNG_NAMES[rung];
+}
+
+/**
  * Adaptive start (guidelines §5): the first unit in a topic starts at Rung 1.
  * A later unit starts at Rung 3 only if the previous unit in the same topic
  * cleared with no regressions and at most one hint; otherwise Rung 1.
@@ -77,7 +102,7 @@ export function startingRung(meta: DrillMeta, p: Progress): Rung {
   const prev = set[meta.index - 2];
   if (!prev) return 1;
   const prevState = p.drills[prev.id];
-  if (!prevState || prevState.cleared < 5) return 1;
+  if (!prevState || prevState.cleared < finalRung(prev)) return 1;
   return prevState.regressions === 0 && prevState.hints <= 1 ? 3 : 1;
 }
 
@@ -96,5 +121,7 @@ export function currentDrill(p: Progress): DrillMeta | null {
     const named = all.find((d) => d.id === p.current);
     if (named) return named;
   }
-  return all.find((d) => (p.drills[d.id]?.cleared ?? 0) < 5) ?? all[0] ?? null;
+  return all.find(
+    (d) => (p.drills[d.id]?.cleared ?? 0) < finalRung(d),
+  ) ?? all[0] ?? null;
 }

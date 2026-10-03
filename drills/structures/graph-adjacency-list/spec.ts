@@ -9,6 +9,48 @@ export interface GraphLike {
 
 export type GraphCtor = new (directed: boolean) => GraphLike;
 
+/** Representation shared by the operation-sized drills. */
+export interface GraphState {
+  readonly directed: boolean;
+  readonly adj: Map<number, Set<number>>;
+}
+
+export type AddEdgeOperation = (
+  state: GraphState,
+  u: number,
+  v: number,
+) => void;
+
+export type NeighborsOperation = (
+  state: GraphState,
+  v: number,
+) => number[];
+
+/**
+ * Compose independently drilled operations behind the public API. The final
+ * operation's Rung 7 asks the learner to reconstruct this complete API file.
+ */
+export function composeGraph(
+  addEdge: AddEdgeOperation,
+  neighbors: NeighborsOperation,
+): GraphCtor {
+  return class Graph implements GraphLike {
+    private readonly state: GraphState;
+
+    constructor(directed: boolean) {
+      this.state = { directed, adj: new Map<number, Set<number>>() };
+    }
+
+    addEdge(u: number, v: number): void {
+      addEdge(this.state, u, v);
+    }
+
+    neighbors(v: number): number[] {
+      return neighbors(this.state, v);
+    }
+  };
+}
+
 export type Op = readonly ["addEdge", number, number] | readonly ["neighbors", number];
 
 export type Out = number[];
@@ -25,6 +67,55 @@ export function drive(Ctor: GraphCtor, directed: boolean, ops: readonly Op[]): O
     }
   }
   return out;
+}
+
+/**
+ * Exercise addEdge in isolation. Neighbor reads are observations made by the
+ * test adapter, so this drill never asks the learner to implement neighbors.
+ */
+export function driveAddEdge(
+  addEdge: AddEdgeOperation,
+  directed: boolean,
+  ops: readonly Op[],
+): Out[] {
+  const state: GraphState = {
+    directed,
+    adj: new Map<number, Set<number>>(),
+  };
+  const out: Out[] = [];
+  for (const op of ops) {
+    if (op[0] === "addEdge") {
+      addEdge(state, op[1], op[2]);
+    } else {
+      out.push([...(state.adj.get(op[1]) ?? [])].sort((a, b) => a - b));
+    }
+  }
+  return out;
+}
+
+export type NeighborCaseArgs = readonly [
+  directed: boolean,
+  entries: readonly (readonly [number, readonly number[]])[],
+  vertex: number,
+  mutateFirstResult: boolean,
+];
+
+/** Exercise neighbors in isolation against an already-built representation. */
+export function driveNeighbors(
+  neighbors: NeighborsOperation,
+  directed: boolean,
+  entries: readonly (readonly [number, readonly number[]])[],
+  vertex: number,
+  mutateFirstResult: boolean,
+): Out[] {
+  const state: GraphState = {
+    directed,
+    adj: new Map(entries.map(([v, ns]) => [v, new Set(ns)])),
+  };
+  const first = neighbors(state, vertex);
+  const observed = [...first];
+  if (mutateFirstResult) first.push(Number.MAX_SAFE_INTEGER);
+  return [observed, neighbors(state, vertex)];
 }
 
 const add = (u: number, v: number): Op => ["addEdge", u, v] as const;
@@ -110,6 +201,37 @@ export const cases: readonly Case<[boolean, readonly Op[]], Out[]>[] = [
     name: "60 scrambled undirected edges: neighbors match a brute-force adjacency",
     args: [false, stressOps],
     want: stressWant,
+    edge: true,
+  },
+];
+
+export const neighborCases: readonly Case<NeighborCaseArgs, Out[]>[] = [
+  {
+    name: "known vertex returns its neighbors in ascending order",
+    args: [false, [[5, [3, 1, 9]]], 5, false],
+    want: [[1, 3, 9], [1, 3, 9]],
+  },
+  {
+    name: "directed state uses the same read contract",
+    args: [true, [[1, [7, 2]]], 1, false],
+    want: [[2, 7], [2, 7]],
+  },
+  {
+    name: "unknown vertex has no neighbors",
+    args: [false, [], 99, false],
+    want: [[], []],
+    edge: true,
+  },
+  {
+    name: "mutating one result cannot mutate graph state",
+    args: [false, [[4, [8, 2]]], 4, true],
+    want: [[2, 8], [2, 8]],
+    edge: true,
+  },
+  {
+    name: "a self-loop appears once",
+    args: [true, [[4, [4]]], 4, false],
+    want: [[4], [4]],
     edge: true,
   },
 ];

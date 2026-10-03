@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "current": "structures/insertion-sort-linked-list/01-insert-into-sorted",
+  "current": "structures/graph-traversal/03-bfs",
   "drills": {
     "structures/insertion-sort-linked-list/01-insert-into-sorted": {
       "rung": 5,
@@ -80,6 +80,541 @@
           "at": "2026-09-12T22:56:21.423Z",
           "rung": 5,
           "event": "pass"
+        }
+      ]
+    },
+    "structures/graph-adjacency-list/01-add-edge": {
+      "rung": 7,
+      "cleared": 7,
+      "failStreak": 0,
+      "hints": 0,
+      "regressions": 3,
+      "rung5StartedAt": null,
+      "rung5Seconds": null,
+      "rung7StartedAt": "2026-09-18T23:51:08.750Z",
+      "rung7Seconds": 803,
+      "log": [
+        {
+          "at": "2026-09-17T14:52:42.398Z",
+          "rung": 1,
+          "event": "pass"
+        },
+        {
+          "at": "2026-09-17T14:53:35.849Z",
+          "rung": 2,
+          "event": "pass"
+        },
+        {
+          "at": "2026-09-18T17:09:20.906Z",
+          "rung": 3,
+          "event": "pass"
+        },
+        {
+          "at": "2026-09-18T22:03:44.970Z",
+          "rung": 4,
+          "event": "pass"
+        },
+        {
+          "at": "2026-09-18T22:03:58.073Z",
+          "rung": 5,
+          "event": "pass"
+        },
+        {
+          "at": "2026-09-18T22:04:11.916Z",
+          "rung": 6,
+          "event": "pass"
+        },
+        {
+          "at": "2026-09-18T22:04:11.916Z",
+          "rung": 7,
+          "event": "open"
+        },
+        {
+          "at": "2026-09-18T22:27:48.083Z",
+          "rung": 7,
+          "event": "fail"
+        },
+        {
+          "at": "2026-09-18T22:28:18.224Z",
+          "rung": 7,
+          "event": "fail"
+        },
+        {
+          "at": "2026-09-18T22:28:18.224Z",
+          "rung": 6,
+          "event": "regress"
+        },
+        {
+          "at": "2026-09-18T22:29:07.884Z",
+          "rung": 6,
+          "event": "pass"
+        },
+        {
+          "at": "2026-09-18T22:29:07.884Z",
+          "rung": 7,
+          "event": "open"
+        },
+        {
+          "at": "2026-09-18T22:29:12.535Z",
+          "rung": 7,
+          "event": "fail"
+        },
+        {
+          "at": "2026-09-18T22:29:28.662Z",
+          "rung": 7,
+          "event": "fail"
+        },
+        {
+          "at": "2026-09-18T22:29:28.662Z",
+          "rung": 6,
+          "event": "regress"
+        },
+        {
+          "at": "2026-09-18T23:28:14.882Z",
+          "rung": 6,
+          "event": "pass"
+        },
+        {
+          "at": "2026-09-18T23:28:14.882Z",
+          "rung": 7,
+          "event": "open"
+        },
+        {
+          "at": "2026-09-18T23:28:16.821Z",
+          "rung": 7,
+          "event": "fail"
+        },
+        {
+          "at": "2026-09-18T23:41:34.606Z",
+          "rung": 7,
+          "event": "fail"
+        },
+        {
+          "at": "2026-09-18T23:41:34.606Z",
+          "rung": 6,
+          "event": "regress"
+        },
+        {
+          "at": "2026-09-18T23:51:08.750Z",
+          "rung": 6,
+          "event": "pass"
+        },
+        {
+          "at": "2026-09-18T23:51:08.750Z",
+          "rung": 7,
+          "event": "open"
+        },
+        {
+          "at": "2026-09-18T23:51:09.903Z",
+          "rung": 7,
+          "event": "fail"
+        },
+        {
+          "at": "2026-09-19T00:04:31.327Z",
+          "rung": 7,
+          "event": "pass"
+        }
+      ]
+    },
+    "structures/graph-adjacency-list/02-neighbors": {
+      "rung": 7,
+      "cleared": 7,
+      "failStreak": 0,
+      "hints": 0,
+      "regressions": 4,
+      "rung5StartedAt": null,
+      "rung5Seconds": null,
+      "rung7StartedAt": "2026-09-26T16:50:46.153Z",
+      "rung7Seconds": 1,
+      "log": [
+        {
+          "at": "2026-09-19T00:04:58.941Z",
+          "rung": 1,
+          "event": "fail"
+        },
+        {
+          "at": "2026-09-19T00:15:58.088Z",
+          "rung": 1,
+          "event": "fail"
+        },
+        {
+          "at": "2026-09-19T00:25:51.703Z",
+          "rung": 1,
+          "event": "pass"
+        },
+        {
+          "at": "2026-09-19T00:26:07.067Z",
+          "rung": 2,
+          "event": "pass"
+        },
+        {
+          "at": "2026-09-19T00:27:11.987Z",
+          "rung": 3,
+          "event": "fail"
+        },
+        {
+          "at": "2026-09-19T00:36:53.585Z",
+          "rung": 3,
+          "event": "pass"
+        },
+        {
+          "at": "2026-09-19T00:46:49.346Z",
+          "rung": 4,
+          "event": "pass"
+        },
+        {
+          "at": "2026-09-19T00:57:01.845Z",
+          "rung": 5,
+          "event": "pass"
+        },
+        {
+          "at": "2026-09-19T00:57:20.795Z",
+          "rung": 6,
+          "event": "pass"
+        },
+        {
+          "at": "2026-09-19T00:57:20.796Z",
+          "rung": 7,
+          "event": "open"
+        },
+        {
+          "at": "2026-09-19T16:31:28.054Z",
+          "rung": 7,
+          "event": "fail"
+        },
+        {
+          "at": "2026-09-21T14:36:06.388Z",
+          "rung": 7,
+          "event": "fail"
+        },
+        {
+          "at": "2026-09-21T14:36:06.388Z",
+          "rung": 6,
+          "event": "regress"
+        },
+        {
+          "at": "2026-09-21T17:46:56.139Z",
+          "rung": 6,
+          "event": "pass"
+        },
+        {
+          "at": "2026-09-21T17:46:56.139Z",
+          "rung": 7,
+          "event": "open"
+        },
+        {
+          "at": "2026-09-21T17:46:59.333Z",
+          "rung": 7,
+          "event": "fail"
+        },
+        {
+          "at": "2026-09-21T17:49:45.410Z",
+          "rung": 7,
+          "event": "fail"
+        },
+        {
+          "at": "2026-09-21T17:49:45.410Z",
+          "rung": 6,
+          "event": "regress"
+        },
+        {
+          "at": "2026-09-21T18:49:13.208Z",
+          "rung": 6,
+          "event": "pass"
+        },
+        {
+          "at": "2026-09-21T18:49:13.208Z",
+          "rung": 7,
+          "event": "open"
+        },
+        {
+          "at": "2026-09-21T18:49:15.845Z",
+          "rung": 7,
+          "event": "fail"
+        },
+        {
+          "at": "2026-09-26T16:49:28.245Z",
+          "rung": 7,
+          "event": "fail"
+        },
+        {
+          "at": "2026-09-26T16:49:28.245Z",
+          "rung": 6,
+          "event": "regress"
+        },
+        {
+          "at": "2026-09-26T16:49:56.400Z",
+          "rung": 6,
+          "event": "pass"
+        },
+        {
+          "at": "2026-09-26T16:49:56.401Z",
+          "rung": 7,
+          "event": "open"
+        },
+        {
+          "at": "2026-09-26T16:49:59.563Z",
+          "rung": 7,
+          "event": "fail"
+        },
+        {
+          "at": "2026-09-26T16:50:23.415Z",
+          "rung": 7,
+          "event": "fail"
+        },
+        {
+          "at": "2026-09-26T16:50:23.415Z",
+          "rung": 6,
+          "event": "regress"
+        },
+        {
+          "at": "2026-09-26T16:50:46.153Z",
+          "rung": 6,
+          "event": "pass"
+        },
+        {
+          "at": "2026-09-26T16:50:46.153Z",
+          "rung": 7,
+          "event": "open"
+        },
+        {
+          "at": "2026-09-26T16:50:47.635Z",
+          "rung": 7,
+          "event": "pass"
+        }
+      ]
+    },
+    "structures/graph-traversal/01-dfs": {
+      "rung": 7,
+      "cleared": 7,
+      "failStreak": 0,
+      "hints": 0,
+      "regressions": 0,
+      "rung5StartedAt": null,
+      "rung5Seconds": null,
+      "rung7StartedAt": "2026-09-26T19:45:55.116Z",
+      "rung7Seconds": 67602,
+      "log": [
+        {
+          "at": "2026-09-26T18:35:32.550Z",
+          "rung": 1,
+          "event": "pass"
+        },
+        {
+          "at": "2026-09-26T18:36:43.194Z",
+          "rung": 2,
+          "event": "pass"
+        },
+        {
+          "at": "2026-09-26T18:46:09.317Z",
+          "rung": 3,
+          "event": "pass"
+        },
+        {
+          "at": "2026-09-26T19:30:32.317Z",
+          "rung": 4,
+          "event": "pass"
+        },
+        {
+          "at": "2026-09-26T19:40:02.525Z",
+          "rung": 5,
+          "event": "pass"
+        },
+        {
+          "at": "2026-09-26T19:45:55.116Z",
+          "rung": 6,
+          "event": "pass"
+        },
+        {
+          "at": "2026-09-26T19:45:55.116Z",
+          "rung": 7,
+          "event": "open"
+        },
+        {
+          "at": "2026-09-27T14:32:22.495Z",
+          "rung": 7,
+          "event": "fail"
+        },
+        {
+          "at": "2026-09-27T14:32:37.270Z",
+          "rung": 7,
+          "event": "pass"
+        }
+      ]
+    },
+    "structures/graph-traversal/02-dfs-iterative": {
+      "rung": 7,
+      "cleared": 7,
+      "failStreak": 0,
+      "hints": 1,
+      "regressions": 3,
+      "rung5StartedAt": null,
+      "rung5Seconds": null,
+      "rung7StartedAt": "2026-10-01T22:58:27.081Z",
+      "rung7Seconds": 1285,
+      "log": [
+        {
+          "at": "2026-09-27T14:39:28.502Z",
+          "rung": 3,
+          "event": "fail"
+        },
+        {
+          "at": "2026-09-27T14:41:37.538Z",
+          "rung": 3,
+          "event": "fail"
+        },
+        {
+          "at": "2026-09-27T14:41:37.539Z",
+          "rung": 2,
+          "event": "regress"
+        },
+        {
+          "at": "2026-09-27T14:44:31.806Z",
+          "rung": 2,
+          "event": "pass"
+        },
+        {
+          "at": "2026-09-27T14:44:57.942Z",
+          "rung": 3,
+          "event": "fail"
+        },
+        {
+          "at": "2026-09-27T14:48:25.970Z",
+          "rung": 3,
+          "event": "pass"
+        },
+        {
+          "at": "2026-09-27T15:48:39.634Z",
+          "rung": 4,
+          "event": "fail"
+        },
+        {
+          "at": "2026-09-27T15:54:27.782Z",
+          "rung": 4,
+          "event": "fail"
+        },
+        {
+          "at": "2026-09-27T15:54:27.783Z",
+          "rung": 3,
+          "event": "regress"
+        },
+        {
+          "at": "2026-09-27T15:54:34.566Z",
+          "rung": 3,
+          "event": "hint"
+        },
+        {
+          "at": "2026-09-30T23:41:49.604Z",
+          "rung": 3,
+          "event": "fail"
+        },
+        {
+          "at": "2026-09-30T23:52:03.663Z",
+          "rung": 3,
+          "event": "fail"
+        },
+        {
+          "at": "2026-09-30T23:52:03.663Z",
+          "rung": 2,
+          "event": "regress"
+        },
+        {
+          "at": "2026-09-30T23:53:34.212Z",
+          "rung": 2,
+          "event": "pass"
+        },
+        {
+          "at": "2026-09-30T23:53:35.960Z",
+          "rung": 3,
+          "event": "pass"
+        },
+        {
+          "at": "2026-09-30T23:53:38.189Z",
+          "rung": 4,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-01T14:09:53.634Z",
+          "rung": 5,
+          "event": "fail"
+        },
+        {
+          "at": "2026-10-01T14:12:14.270Z",
+          "rung": 5,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-01T22:58:27.081Z",
+          "rung": 6,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-01T22:58:27.081Z",
+          "rung": 7,
+          "event": "open"
+        },
+        {
+          "at": "2026-10-01T23:19:36.567Z",
+          "rung": 7,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-01T23:19:52.391Z",
+          "rung": 7,
+          "event": "pass"
+        }
+      ]
+    },
+    "structures/graph-traversal/03-bfs": {
+      "rung": 7,
+      "cleared": 6,
+      "failStreak": 0,
+      "hints": 0,
+      "regressions": 0,
+      "rung5StartedAt": null,
+      "rung5Seconds": null,
+      "rung7StartedAt": "2026-10-03T20:55:42.112Z",
+      "rung7Seconds": null,
+      "log": [
+        {
+          "at": "2026-10-03T14:01:12.339Z",
+          "rung": 1,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-03T14:01:17.052Z",
+          "rung": 2,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-03T14:01:36.934Z",
+          "rung": 3,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-03T15:54:51.039Z",
+          "rung": 4,
+          "event": "fail"
+        },
+        {
+          "at": "2026-10-03T16:10:06.593Z",
+          "rung": 4,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-03T16:49:51.131Z",
+          "rung": 5,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-03T20:55:42.112Z",
+          "rung": 6,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-03T20:55:42.112Z",
+          "rung": 7,
+          "event": "open"
         }
       ]
     }

@@ -1,8 +1,8 @@
 import { TODO } from "#harness/verify.ts";
 
 /**
- * Rung 4 — Full Body.
- * One whole method body, contract only.
+ * Rung 4 — Guided Reconstruction.
+ * Rebuild the method from ordered behavioral checkpoints.
  *
  * Target operation: siftDown()
  * Invariant to preserve: every node is <= both of its children.
@@ -55,9 +55,12 @@ export class MinHeap {
   }
 
   private siftDown(i: number): void {
-    // Precondition: the array satisfies the invariant everywhere except
-    // possibly at index i, whose value may be too large for its position.
-    // Postcondition: the invariant holds everywhere. O(log n).
-    TODO("the whole siftDown body");
+    const n = this.a.length;
+    for (;;) {
+      const next = TODO("the best valid position among i and its children");
+      if (TODO("whether the invariant already holds at i")) break;
+      TODO("move the violation one level downward");
+      i = TODO("the position where the moved value now lives");
+    }
   }
 }
