@@ -17,7 +17,7 @@ export function reachableNodes(n: number, edges: number[][], restricted: number[
   for (const r of restricted) seen[r] = true;
 
   seen[0] = true;
-  let reached: number = TODO("how many nodes count as reached before the search begins");
+  let reached = 1;
   const stack = [0];
 
   while (stack.length > 0) {
@@ -25,8 +25,8 @@ export function reachableNodes(n: number, edges: number[][], restricted: number[
     for (const w of graph[v]!) {
       if (!seen[w]) {
         seen[w] = true;
-        reached++;
         stack.push(w);
+        TODO("w is counted as reached");
       }
     }
   }

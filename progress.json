@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "current": "structures/graph-traversal/03-bfs",
+  "current": "patterns/dfs-bfs/06-number-of-islands",
   "drills": {
     "structures/insertion-sort-linked-list/01-insert-into-sorted": {
       "rung": 5,
@@ -615,6 +615,296 @@
           "at": "2026-10-03T20:55:42.112Z",
           "rung": 7,
           "event": "open"
+        }
+      ]
+    },
+    "patterns/heaps/01-seat-reservation-manager": {
+      "rung": 6,
+      "cleared": 5,
+      "failStreak": 1,
+      "hints": 0,
+      "regressions": 0,
+      "rung5StartedAt": null,
+      "rung5Seconds": null,
+      "rung7StartedAt": null,
+      "rung7Seconds": null,
+      "log": [
+        {
+          "at": "2026-10-03T22:21:10.553Z",
+          "rung": 1,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-04T00:11:40.424Z",
+          "rung": 2,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-04T00:20:34.963Z",
+          "rung": 3,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-04T00:45:05.083Z",
+          "rung": 4,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-04T00:51:34.382Z",
+          "rung": 5,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-04T14:14:55.295Z",
+          "rung": 6,
+          "event": "fail"
+        }
+      ]
+    },
+    "patterns/heaps/02-meeting-rooms-ii": {
+      "rung": 7,
+      "cleared": 6,
+      "failStreak": 1,
+      "hints": 0,
+      "regressions": 1,
+      "rung5StartedAt": null,
+      "rung5Seconds": null,
+      "rung7StartedAt": "2026-10-05T17:03:36.426Z",
+      "rung7Seconds": null,
+      "log": [
+        {
+          "at": "2026-10-04T14:15:20.202Z",
+          "rung": 1,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-04T14:16:15.088Z",
+          "rung": 2,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-04T14:17:49.882Z",
+          "rung": 3,
+          "event": "fail"
+        },
+        {
+          "at": "2026-10-04T14:18:43.545Z",
+          "rung": 3,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-04T14:27:40.800Z",
+          "rung": 4,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-05T13:19:10.711Z",
+          "rung": 5,
+          "event": "fail"
+        },
+        {
+          "at": "2026-10-05T14:09:48.451Z",
+          "rung": 5,
+          "event": "fail"
+        },
+        {
+          "at": "2026-10-05T14:09:48.452Z",
+          "rung": 4,
+          "event": "regress"
+        },
+        {
+          "at": "2026-10-05T14:10:19.990Z",
+          "rung": 4,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-05T14:10:21.318Z",
+          "rung": 5,
+          "event": "fail"
+        },
+        {
+          "at": "2026-10-05T14:11:51.244Z",
+          "rung": 5,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-05T17:03:36.425Z",
+          "rung": 6,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-05T17:03:36.426Z",
+          "rung": 7,
+          "event": "open"
+        },
+        {
+          "at": "2026-10-09T15:41:37.360Z",
+          "rung": 7,
+          "event": "fail"
+        }
+      ]
+    },
+    "patterns/heaps/03-smallest-unoccupied-chair": {
+      "rung": 6,
+      "cleared": 5,
+      "failStreak": 0,
+      "hints": 0,
+      "regressions": 1,
+      "rung5StartedAt": null,
+      "rung5Seconds": null,
+      "rung7StartedAt": null,
+      "rung7Seconds": null,
+      "log": [
+        {
+          "at": "2026-10-09T15:42:17.723Z",
+          "rung": 1,
+          "event": "fail"
+        },
+        {
+          "at": "2026-10-09T15:44:08.825Z",
+          "rung": 1,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-09T16:01:13.036Z",
+          "rung": 2,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-09T16:05:20.191Z",
+          "rung": 3,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-09T16:16:18.697Z",
+          "rung": 4,
+          "event": "fail"
+        },
+        {
+          "at": "2026-10-09T16:38:46.331Z",
+          "rung": 4,
+          "event": "fail"
+        },
+        {
+          "at": "2026-10-09T16:38:46.332Z",
+          "rung": 3,
+          "event": "regress"
+        },
+        {
+          "at": "2026-10-09T16:40:27.873Z",
+          "rung": 3,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-09T16:40:29.447Z",
+          "rung": 4,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-10T20:10:30.343Z",
+          "rung": 5,
+          "event": "fail"
+        },
+        {
+          "at": "2026-10-10T20:14:44.605Z",
+          "rung": 5,
+          "event": "pass"
+        }
+      ]
+    },
+    "patterns/heaps/04-find-median-from-data-stream": {
+      "rung": 6,
+      "cleared": 5,
+      "failStreak": 0,
+      "hints": 0,
+      "regressions": 0,
+      "rung5StartedAt": null,
+      "rung5Seconds": null,
+      "rung7StartedAt": null,
+      "rung7Seconds": null,
+      "log": [
+        {
+          "at": "2026-10-11T21:20:45.590Z",
+          "rung": 1,
+          "event": "fail"
+        },
+        {
+          "at": "2026-10-11T21:21:27.776Z",
+          "rung": 1,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-11T22:01:23.510Z",
+          "rung": 2,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-11T22:19:59.108Z",
+          "rung": 3,
+          "event": "fail"
+        },
+        {
+          "at": "2026-10-11T22:21:01.520Z",
+          "rung": 3,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-11T23:15:57.846Z",
+          "rung": 4,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-11T23:55:04.273Z",
+          "rung": 5,
+          "event": "fail"
+        },
+        {
+          "at": "2026-10-11T23:55:21.706Z",
+          "rung": 5,
+          "event": "pass"
+        }
+      ]
+    },
+    "patterns/dfs-bfs/06-number-of-islands": {
+      "rung": 3,
+      "cleared": 2,
+      "failStreak": 0,
+      "hints": 0,
+      "regressions": 1,
+      "rung5StartedAt": null,
+      "rung5Seconds": null,
+      "rung7StartedAt": null,
+      "rung7Seconds": null,
+      "log": [
+        {
+          "at": "2026-10-12T16:35:37.688Z",
+          "rung": 1,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-12T16:37:51.607Z",
+          "rung": 2,
+          "event": "fail"
+        },
+        {
+          "at": "2026-10-12T16:38:18.543Z",
+          "rung": 2,
+          "event": "fail"
+        },
+        {
+          "at": "2026-10-12T16:38:18.544Z",
+          "rung": 1,
+          "event": "regress"
+        },
+        {
+          "at": "2026-10-12T16:39:10.178Z",
+          "rung": 1,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-12T16:39:12.313Z",
+          "rung": 2,
+          "event": "pass"
         }
       ]
     }

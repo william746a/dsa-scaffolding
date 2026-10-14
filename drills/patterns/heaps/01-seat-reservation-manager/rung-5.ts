@@ -16,15 +16,16 @@ import { PriorityQueue } from "../priority-queue.ts";
  * Target: O(log n) per reserve and unreserve, O(n) space.
  */
 export class SeatManager {
-  constructor(n: number) {
-    TODO("set up whatever state reserve() and unreserve() rely on");
-  }
+  private returned = new PriorityQueue<number>((a, b) => a - b);
+  private next: number = 1;
+  constructor(n: number) {}
 
   reserve(): number {
-    return TODO("the whole reserve body");
+    if (this.returned.size > 0) return this.returned.pop()!;
+    return this.next++;
   }
 
   unreserve(seatNumber: number): void {
-    TODO("the whole unreserve body");
+    this.returned.push(seatNumber);
   }
 }

@@ -18,5 +18,5 @@ export function minMeetingRooms(intervals: number[][]): number {
     most = Math.max(most, ends.size);
   }
 
-  return TODO("hand back the answer the function has already computed");
+  return most;
 }

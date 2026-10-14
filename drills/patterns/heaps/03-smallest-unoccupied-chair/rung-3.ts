@@ -25,7 +25,9 @@ export function smallestChair(times: number[][], targetFriend: number): number {
 
     // TODO: restore the invariant above for this arrival. A chair vacated at
     // the very moment someone arrives counts as vacated.
-    TODO("bring free and taken up to date as of `arrival`");
+    while (taken.size > 0 && taken.peek()![0] <= arrival) {
+      free.push(taken.pop()![1]);
+    }
 
     const chair = free.size > 0 ? free.pop()! : nextChair++;
     if (arrival === targetArrival) return chair;

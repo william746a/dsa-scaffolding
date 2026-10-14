@@ -16,10 +16,10 @@ export function canVisitAllRooms(rooms: number[][]): boolean {
       if (!opened[key]) {
         opened[key] = true;
         count++;
-        queue.push(key);
+        queue.push(TODO("the room that now waits to be searched for keys"));
       }
     }
   }
 
-  return TODO("whether every room was opened, from what has been counted");
+  return count === rooms.length;
 }

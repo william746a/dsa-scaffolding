@@ -25,9 +25,7 @@ export function amountOfTime(root: TreeNode | null, start: number): number {
     }
   }
 
-  const infectedAt = new Map<number, number>([
-    [start, TODO("the minute at which start itself is infected")],
-  ]);
+  const infectedAt = new Map<number, number>([[start, 0]]);
   const queue = [start];
   let minutes = 0;
 
@@ -37,7 +35,7 @@ export function amountOfTime(root: TreeNode | null, start: number): number {
     minutes = Math.max(minutes, t);
     for (const w of graph.get(v) ?? []) {
       if (!infectedAt.has(w)) {
-        infectedAt.set(w, t + 1);
+        infectedAt.set(w, TODO("the minute at which w is infected"));
         queue.push(w);
       }
     }

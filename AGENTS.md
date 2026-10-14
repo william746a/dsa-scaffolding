@@ -76,7 +76,7 @@ The seven rungs are unchanged in spirit; only what fills each one differs.
 
 | Rung | What's given | What's blank |
 | :---- | :---- | :---- |
-| **1 — Isolated Move** | ~90% of the implementation, working | One mechanical element: a constructor field init, a `size`/`is_empty` accessor, a base-case return, an index helper like `parent(i)` |
+| **1 — Isolated Move** | ~90% of the implementation, working | One mechanical element, taken from inside the signature move wherever it has one: an operand of its comparison, an index expression, an argument, a starting value. Only when it has none, the nearest mechanical line it reads or writes: a base-case return, an index helper like `parent(i)`, a field init |
 | **2 — Supporting Logic** | Most of the implementation | One moderate element: a bounds or empty-check guard, an index update, a call into a helper the learner already wrote |
 | **3 — Signature Move** | Skeleton + all boilerplate + the stated invariant | **The invariant-maintaining step** — the loop or expression that IS the structure (see table) |
 | **4 — Guided Reconstruction** | Working class/module plus the target method signature and ordered behavioral checkpoints | Every major phase of the target method. Checkpoints describe required state transitions, never the mechanism |
@@ -234,7 +234,8 @@ runner. No test framework, no build step, no runtime dependencies.
 ### Layout
 
 ```
-harness/          types, ledger, gate, runner, status — do not edit while drilling
+harness/          types, ledger, gate, runner, status, failure reporter — do not
+                  edit while drilling
 progress.json     the ledger: rung, cleared, failStreak, hints, regressions, timings
 drills/
   patterns/<pattern>/<lib>.ts            optional supplied runtime libs that mirror
@@ -270,6 +271,10 @@ topic; drills sharing a topic are one set, and adaptive start looks across it.
 - `checkCases` executes the learner's code against every case. It also fails
   any suite whose case list contains no `edge: true` case — the "at least one
   edge case" rule is enforced against the *author*, not left to good faith.
+- A failing case prints its input, what came back (or what was thrown, with
+  only the stack frames inside `drills/`), what was wanted, and anything the
+  submission wrote to `console` during that case. Console output from passing
+  cases is discarded, so a `console.log` trace shows up exactly where it helps.
 - The runner owns advancement: pass → `cleared = N`, rung `N+1`; fail → streak
   +1; second consecutive fail at one rung → regress, `regressions` +1, streak
   reset. Adaptive start (Rung 3 vs Rung 1 for the next drill in a set) is
@@ -298,6 +303,12 @@ topic; drills sharing a topic are one set, and adaptive start looks across it.
    that technique — a stale index, an off-by-one bound, an empty input.
 3. Write `rung-1.ts` … `rung-7.ts`. Each file removes exactly the support
    assigned to that rung; earlier rungs' isolated blanks are restored.
+   Rung 1's blank is, wherever possible, a strict part of the Rung 3 blank:
+   one mechanical piece of the signature move (a value, operand, argument,
+   or bound that needs no insight to fill and can be described without
+   stating the technique), with the rest of that block working around it.
+   Fall back to the mechanical line nearest the signature move only when it
+   has no such piece — never to unrelated setup by default.
    Rung 3 blanks the signature move from the tables above. Rung 4 uses ordered
    behavioral checkpoints, Rung 5 blanks the independent full body, and Rung 6
    keeps only the target function's typed interface plus shared representation
@@ -349,7 +360,9 @@ For each session:
    Window, the recurrence for DP).
 4. Present code scaffolded per this ladder, blanking exactly one rung's worth
    at a time:
-   Rung 1: one mechanical element (init/return/simple line) blank.
+   Rung 1: one mechanical element blank, taken from inside the signature
+           move where possible (an operand, value, or argument within it);
+           otherwise the mechanical line nearest to it.
    Rung 2: one moderate element (a conditional/index update) blank.
    Rung 3: the signature move itself blank.
    Rung 4: all major phases blank, with ordered behavioral checkpoints.
@@ -409,7 +422,9 @@ For each session:
    incorrect technique.
 4. Drill operation by operation (typically 3-5 core operations), blanking
    exactly one rung's worth at a time:
-   Rung 1: one mechanical element (field init, size accessor, index helper).
+   Rung 1: one mechanical element, taken from inside the signature move
+           where possible (an operand, index expression, or argument within
+           it); otherwise the mechanical line nearest to it.
    Rung 2: one moderate element (bounds/empty guard, index update).
    Rung 3: the signature move itself blank.
    Rung 4: all major phases of the target method blank, with ordered

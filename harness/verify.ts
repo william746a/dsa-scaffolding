@@ -7,6 +7,8 @@
 
 import assert from "node:assert/strict";
 import { test } from "node:test";
+import { format, isDeepStrictEqual } from "node:util";
+import { explain, show } from "./trace.ts";
 
 export interface Case<Args extends readonly unknown[], R> {
   name: string;
@@ -40,17 +42,116 @@ export function checkCases<Args extends readonly unknown[], R>(
 
   for (const c of cases) {
     test(`${c.edge ? "edge" : "example"}: ${c.name}`, () => {
-      const actual = fn(...(structuredClone(c.args) as unknown as Args));
-      if (opts.equals) {
-        assert.ok(
-          opts.equals(actual, c.want),
-          `got ${fmt(actual)}, want ${fmt(c.want)}`,
-        );
-      } else {
-        assert.deepEqual(actual, c.want);
+      const args = structuredClone(c.args) as unknown as Args;
+      const logged = new Log();
+      let actual: R;
+      try {
+        actual = quietly(logged, () => fn(...args));
+      } catch (err) {
+        throw new CaseFailure([
+          ["input", showArgs(c.args)],
+          ["threw", explain(err)],
+          ["want", show(c.want)],
+          ...logged.rows(),
+        ]);
       }
+      const ok = opts.equals
+        ? opts.equals(actual, c.want)
+        : isDeepStrictEqual(actual, c.want);
+      if (ok) return;
+      throw new CaseFailure([
+        ["input", showArgs(c.args)],
+        ["got", show(actual)],
+        ["want", show(c.want)],
+        ...(opts.equals ? [] : firstDifference(actual, c.want)),
+        ...logged.rows(),
+      ]);
     });
   }
+}
+
+type Row = readonly [label: string, text: string];
+
+const LABEL_WIDTH = 9;
+const LOG_LIMIT = 40;
+const CONSOLE_METHODS = ["log", "info", "debug", "warn", "error"] as const;
+
+/**
+ * A failed case, rendered for the learner: what went in, what came out, what
+ * was wanted, and whatever the submission printed while handling that case.
+ */
+export class CaseFailure extends Error {
+  override name = "CaseFailure";
+
+  constructor(rows: readonly Row[]) {
+    super(
+      rows
+        .map(([label, text]) =>
+          text
+            .split("\n")
+            .map((line, i) => (i ? "" : label).padEnd(LABEL_WIDTH) + line)
+            .join("\n"),
+        )
+        .join("\n"),
+    );
+  }
+}
+
+/** Console output from one case, kept only as far as it stays readable. */
+class Log {
+  private lines: string[] = [];
+  private dropped = 0;
+
+  add(text: string): void {
+    for (const line of text.split("\n")) {
+      if (this.lines.length < LOG_LIMIT) this.lines.push(line);
+      else this.dropped += 1;
+    }
+  }
+
+  rows(): Row[] {
+    if (this.lines.length === 0) return [];
+    const more = this.dropped ? [`… ${this.dropped} more lines`] : [];
+    return [["logged", [...this.lines, ...more].join("\n")]];
+  }
+}
+
+/**
+ * Run `body` with console output collected rather than printed, so a failing
+ * case shows its own trace and passing cases stay silent.
+ */
+function quietly<T>(log: Log, body: () => T): T {
+  const saved = CONSOLE_METHODS.map((m) => console[m]);
+  for (const m of CONSOLE_METHODS) {
+    console[m] = (...args: unknown[]) => log.add(format(...args));
+  }
+  try {
+    return body();
+  } finally {
+    CONSOLE_METHODS.forEach((m, i) => (console[m] = saved[i]!));
+  }
+}
+
+function showArgs(args: readonly unknown[]): string {
+  const shown = args.map(show);
+  const oneLine = shown.join(", ");
+  return oneLine.includes("\n") || oneLine.length > 96
+    ? shown.join(",\n")
+    : oneLine;
+}
+
+/** For list results, where the two lists part ways. */
+function firstDifference(actual: unknown, want: unknown): Row[] {
+  if (!Array.isArray(actual) || !Array.isArray(want)) return [];
+  if (Math.max(actual.length, want.length) < 4) return [];
+  const shared = Math.min(actual.length, want.length);
+  for (let i = 0; i < shared; i++) {
+    if (!isDeepStrictEqual(actual[i], want[i])) {
+      return [["differs", `at index ${i}: got ${show(actual[i])}, want ${show(want[i])}`]];
+    }
+  }
+  if (actual.length === want.length) return [];
+  return [["differs", `got ${actual.length} items, want ${want.length}`]];
 }
 
 /**

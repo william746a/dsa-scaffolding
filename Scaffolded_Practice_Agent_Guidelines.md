@@ -25,7 +25,7 @@ whole-body blank to an empty module.
 
 | Rung | What's given | What's blank | Purpose |
 | :---- | :---- | :---- | :---- |
-| **1 — Isolated Move** | \~90% of the solution, fully working | **One mechanical element**: a variable init, a return statement, a simple arithmetic line, a loop bound | Confidence-building on-ramp; orients you to the code's shape without testing the pattern itself |
+| **1 — Isolated Move** | \~90% of the solution, fully working | **One mechanical element, taken from inside the signature move wherever it has one**: an operand, a starting value, an argument, a simple arithmetic line within the block Rung 3 will blank | Confidence-building on-ramp; the first edit lands inside the logic being trained, without yet asking for the insight |
 | **2 — Supporting Logic** | Most of the solution | **One moderate element**: a straightforward conditional, an index update, a helper call | Slightly harder, still not the core insight |
 | **3 — The Signature Move** | Skeleton \+ all boilerplate | **The pattern-defining logic itself** (see table below) | This is the actual thing being trained — everything before this rung was warm-up |
 | **4 — Guided Reconstruction** | Function signature plus ordered, behavioral checkpoints inside the body | **Every major phase of the body** | Synthesis with the execution order still visible; checkpoints say what must be true, never how to achieve it |
@@ -34,6 +34,17 @@ whole-body blank to an empty module.
 | **7 — Blank Page** | Problem statement only | **Everything**, including the interface | Cold, timed, unaided — this *is* the module mastery check from the companion doc |
 
 Advance one rung only after a correct, unaided answer at the current rung. Do not skip rungs on a first pass through a pattern (see §5 for exceptions). Rungs 4-6 must each be materially different files: copying the same whole-body TODO across them does not count as fading.
+
+**Rung 1 sits inside the signature move.** Wherever possible, the Rung 1
+blank is a strict part of what Rung 3 will blank: one mechanical piece of the
+signature move, with the rest of that block working and visible around it.
+The learner's first edit then lands in the logic that IS the technique, not
+in setup it merely depends on. "Possible" means the signature move contains
+a piece that (a) can be filled without the insight — a value, an operand, an
+argument, a bound — and (b) can be described by required behavior without
+stating the technique. Only when it has no such piece, fall back to the
+mechanical line nearest to it (one the signature move reads or writes), and
+prefer that over unrelated setup or the final return.
 
 **No novel-definition jumps.** A rung may require the learner to define only
 a function that has already appeared in an earlier rung of that drill or set.
@@ -116,7 +127,9 @@ For each session:
    Window, the recurrence for DP).
 4. Present code scaffolded per this ladder, blanking exactly one rung's worth
    at a time:
-   Rung 1: one mechanical element (init/return/simple line) blank.
+   Rung 1: one mechanical element blank, taken from inside the signature
+           move where possible (an operand, value, or argument within it);
+           otherwise the mechanical line nearest to it.
    Rung 2: one moderate element (a conditional/index update) blank.
    Rung 3: the signature move itself blank.
    Rung 4: all major phases blank, with ordered behavioral checkpoints.

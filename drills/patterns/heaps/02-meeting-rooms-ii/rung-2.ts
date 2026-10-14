@@ -15,10 +15,7 @@ export function minMeetingRooms(intervals: number[][]): number {
     const end = meeting[1]!;
     while (ends.size > 0 && ends.peek()! <= start) ends.pop();
     ends.push(end);
-    most = TODO(
-      "keep the running peak: the larger of what you already had and the " +
-        "number of rooms in use at this moment",
-    );
+    most = Math.max(most, ends.size);
   }
 
   return most;

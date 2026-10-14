@@ -19,14 +19,14 @@ export function minReorder(n: number, connections: number[][]): number {
   const seen = new Array<boolean>(n).fill(false);
   seen[0] = true;
   const queue = [0];
-  let flips: number = TODO("roads reversed before any have been examined");
+  let flips = 0;
 
   for (let head = 0; head < queue.length; head++) {
     const v = queue[head]!;
     for (const [w, forward] of graph[v]!) {
       if (!seen[w]) {
         seen[w] = true;
-        flips += forward;
+        flips += TODO("how many reversals the road just crossed adds");
         queue.push(w);
       }
     }

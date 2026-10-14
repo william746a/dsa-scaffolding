@@ -17,6 +17,6 @@ export class SeatManager {
   }
 
   unreserve(seatNumber: number): void {
-    TODO("make seatNumber available to a later reserve()");
+    this.returned.push(seatNumber);
   }
 }

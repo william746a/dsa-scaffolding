@@ -9,10 +9,7 @@ type Taken = [leaving: number, chair: number];
  * Everything works except one mechanical line. Fill it in.
  */
 export function smallestChair(times: number[][], targetFriend: number): number {
-  const targetArrival: number = TODO(
-    "the arrival time of targetFriend, which still identifies them once " +
-      "the input is reordered",
-  );
+  const targetArrival: number = times[targetFriend]![0]!;
   const byArrival = [...times].sort((a, b) => a[0]! - b[0]!);
   const free = new PriorityQueue<number>((a, b) => a - b);
   const taken = new PriorityQueue<Taken>((a, b) => a[0] - b[0]);

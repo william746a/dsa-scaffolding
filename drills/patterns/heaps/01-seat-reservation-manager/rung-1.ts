@@ -7,7 +7,7 @@ import { PriorityQueue } from "../priority-queue.ts";
  */
 export class SeatManager {
   private returned = new PriorityQueue<number>((a, b) => a - b);
-  private next: number = TODO("the lowest seat number that has never been handed out");
+  private next: number = 1;
 
   constructor(n: number) {}
 

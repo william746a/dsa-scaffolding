@@ -8,21 +8,20 @@ import { PriorityQueue } from "../priority-queue.ts";
  * Target: O(log n) per reserve and unreserve, O(n) space.
  */
 export class SeatManager {
-  private returned: PriorityQueue<number> = TODO(
-    "a pool of seats that were given back, able to surface its smallest",
-  );
-  private next: number = TODO("the lowest seat number that has never been handed out");
+  private returned: PriorityQueue<number> = 
+    new PriorityQueue<number>((a, b) => a - b);
+  private next: number = 1;
 
   constructor(n: number) {}
 
   reserve(): number {
-    if (TODO("whether any given-back seat is still unclaimed")) {
-      return TODO("the smallest given-back seat, no longer in the pool");
+    if (this.returned.size > 0) {
+      return this.returned.pop()!;
     }
-    return TODO("the lowest never-issued seat, which from now on counts as issued");
+    return this.next++;
   }
 
   unreserve(seatNumber: number): void {
-    TODO("make seatNumber available to a later reserve()");
+    this.returned.push(seatNumber);
   }
 }

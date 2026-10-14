@@ -14,6 +14,7 @@
 import { spawnSync } from "node:child_process";
 import { existsSync } from "node:fs";
 import { join, relative } from "node:path";
+import { pathToFileURL } from "node:url";
 import {
   ROOT,
   currentDrill,
@@ -29,6 +30,8 @@ import { progressLine, title } from "./gate.ts";
 import { type Rung } from "./types.ts";
 
 const TIME_BOX_MIN = 25; // Liemandt block length, used as a soft signal only.
+const REPORTER = pathToFileURL(join(ROOT, "harness", "reporter.ts")).href;
+const LAUNCHER = join(ROOT, "harness", "launch.ts");
 
 const [, , cmd = "run", arg] = process.argv;
 const p = loadProgress();
@@ -96,13 +99,14 @@ function run(): void {
   console.log(progressLine(meta!.id));
   console.log(`Running ${rel(file)}\n`);
 
-  // Each gate module registers tests through node:test. Execute it directly so
-  // assertion details remain visible; wrapping one test module in another
-  // `node --test` process collapses failures to an unhelpful "test failed".
-  const res = spawnSync(process.execPath, [file], {
-    stdio: "inherit",
-    cwd: ROOT,
-  });
+  // Each gate module registers tests through node:test. Load it in one process
+  // (via launch.ts) so failure details reach the reporter intact; wrapping it
+  // in a `node --test` process collapses failures to an unhelpful "test failed".
+  const res = spawnSync(
+    process.execPath,
+    [`--test-reporter=${REPORTER}`, LAUNCHER, file],
+    { stdio: "inherit", cwd: ROOT },
+  );
   res.status === 0 ? onPass() : onFail();
 }
 

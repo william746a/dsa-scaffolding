@@ -21,10 +21,7 @@ export function smallestChair(times: number[][], targetFriend: number): number {
     while (taken.size > 0 && taken.peek()![0] <= arrival) {
       free.push(taken.pop()![1]);
     }
-    const chair: number = TODO(
-      "the smallest chair unoccupied right now — and it must not be offered " +
-        "to anyone else afterwards",
-    );
+    const chair: number = free.size > 0 ? free.pop()! : nextChair++;
     if (arrival === targetArrival) return chair;
     taken.push([leaving, chair]);
   }

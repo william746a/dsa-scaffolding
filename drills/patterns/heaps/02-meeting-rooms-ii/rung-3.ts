@@ -20,7 +20,7 @@ export function minMeetingRooms(intervals: number[][]): number {
     // TODO: restore the invariant above before this meeting takes a room.
     // Remember a room is free for a meeting that starts at the very moment
     // the previous one ends.
-    TODO("give back every room whose meeting is over by `start`");
+    while (ends.size > 0 && ends.peek()! <= start) ends.pop();
 
     ends.push(end);
     most = Math.max(most, ends.size);

@@ -28,10 +28,10 @@ export function validPath(
     for (const w of graph[v]!) {
       if (!seen[w]) {
         seen[w] = true;
-        stack.push(w);
+        stack.push(TODO("the vertex that now waits to be examined"));
       }
     }
   }
 
-  return TODO("the answer once there is nowhere left to go");
+  return false;
 }

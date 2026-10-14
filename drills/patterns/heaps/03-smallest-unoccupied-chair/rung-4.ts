@@ -16,23 +16,19 @@ type Taken = [leaving: number, chair: number];
  * Target: O(n log n) time, O(n) extra space.
  */
 export function smallestChair(times: number[][], targetFriend: number): number {
-  const targetArrival: number = TODO("a way to recognise targetFriend after reordering");
-  const byArrival: number[][] = TODO("the friends, in the order they arrive");
-  const free: PriorityQueue<number> = TODO(
-    "vacated chairs, able to surface the smallest",
-  );
-  const taken: PriorityQueue<Taken> = TODO(
-    "occupied chairs, able to surface whichever will be vacated soonest",
-  );
-  let nextChair: number = TODO("the lowest chair nobody has sat on yet");
+  const targetArrival: number = times[targetFriend]![0]!;
+  const byArrival: number[][] = [...times].sort((a, b) => a[0]! - b[0]!);
+  const free: PriorityQueue<number> = new PriorityQueue<number>((a, b) => a - b);
+  const taken: PriorityQueue<Taken> = new PriorityQueue<Taken>((a, b) => a[0]! - b[0]!);
+  let nextChair: number = 0;
 
   for (const friend of byArrival) {
     const arrival = friend[0]!;
     const leaving = friend[1]!;
-    TODO("every chair vacated by `arrival` is available again");
-    const chair: number = TODO("the smallest chair available right now, now claimed");
-    if (TODO("this friend is targetFriend")) return chair;
-    TODO("this chair stays occupied until `leaving`");
+    while (taken.size > 0 && taken.peek()![0] <= arrival) free.push(taken.pop()![1]);
+    const chair: number = free.size > 0 ? free.pop()! : nextChair++;
+    if (targetArrival == arrival) return chair;
+    taken.push([leaving, chair]);
   }
 
   return -1; // unreachable: targetFriend always arrives

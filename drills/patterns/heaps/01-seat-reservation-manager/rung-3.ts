@@ -17,7 +17,8 @@ export class SeatManager {
   reserve(): number {
     // TODO: hand out the smallest seat that is available right now, and
     // leave the invariant above still true afterwards.
-    return TODO("return the smallest available seat, now reserved");
+    if (this.returned.size > 0) return this.returned.pop()!;
+    return this.next++;
   }
 
   unreserve(seatNumber: number): void {

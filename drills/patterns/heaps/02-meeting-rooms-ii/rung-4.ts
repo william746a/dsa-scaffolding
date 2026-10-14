@@ -11,18 +11,16 @@ import { PriorityQueue } from "../priority-queue.ts";
  * Target: O(n log n) time, O(n) extra space.
  */
 export function minMeetingRooms(intervals: number[][]): number {
-  const sorted: number[][] = TODO("the meetings, in the order they begin");
-  const ends: PriorityQueue<number> = TODO(
-    "the rooms currently in use, able to surface whichever frees up soonest",
-  );
+  const sorted: number[][] = [...intervals].sort((a, b) => a[0]! - b[0]!);
+  const ends = new PriorityQueue<number>((a, b) => a - b);
   let most = 0;
 
   for (const meeting of sorted) {
     const start = meeting[0]!;
     const end = meeting[1]!;
-    TODO("every room that is free by `start` is no longer counted as in use");
-    TODO("this meeting holds a room until `end`");
-    most = TODO("the peak number of rooms in use so far");
+    while (ends.size > 0 && ends.peek()! <= start) ends.pop();
+    ends.push(end);
+    most = Math.max(most, ends.size);
   }
 
   return most;
