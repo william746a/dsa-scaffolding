@@ -38,7 +38,10 @@ export function numIslands(grid: string[][]): number {
 
           // TODO: (nr, nc) is a cell of the grid, one step from (cr, cc).
           // Keep the invariant above.
-          TODO("account for the cell at (nr, nc)");
+          if (grid[nr]![nc] == "1" && !seen[nr]![nc]) {
+            seen[nr]![nc] = true;
+            stack.push([nr, nc]);
+          }
         }
       }
     }
