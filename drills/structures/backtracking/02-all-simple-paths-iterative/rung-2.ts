@@ -20,7 +20,7 @@ export function allSimplePathsIterative(graph: Adjacency, start: number, target:
       frames.pop();
     } else {
       const w = graph[frame.vertex]![frame.next]!;
-      TODO("advance this visit past the neighbor just considered");
+      frame.next++;
       if (!active[w]) {
         active[w] = true;
         path.push(w);

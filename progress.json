@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "current": "patterns/dfs-bfs/06-number-of-islands",
+  "current": "structures/backtracking/02-all-simple-paths-iterative",
   "drills": {
     "structures/insertion-sort-linked-list/01-insert-into-sorted": {
       "rung": 5,
@@ -924,6 +924,29 @@
         {
           "at": "2026-10-14T21:39:36.301Z",
           "rung": 4,
+          "event": "pass"
+        }
+      ]
+    },
+    "structures/backtracking/02-all-simple-paths-iterative": {
+      "rung": 3,
+      "cleared": 2,
+      "failStreak": 0,
+      "hints": 0,
+      "regressions": 0,
+      "rung5StartedAt": null,
+      "rung5Seconds": null,
+      "rung7StartedAt": null,
+      "rung7Seconds": null,
+      "log": [
+        {
+          "at": "2026-10-19T21:29:25.876Z",
+          "rung": 1,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-19T21:33:39.545Z",
+          "rung": 2,
           "event": "pass"
         }
       ]

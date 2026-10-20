@@ -29,5 +29,5 @@ export function allSimplePathsIterative(graph: Adjacency, start: number, target:
     }
   }
 
-  return TODO("return the completed collection of paths");
+  return paths;
 }
