@@ -451,7 +451,7 @@
       "rung5StartedAt": null,
       "rung5Seconds": null,
       "rung7StartedAt": "2026-10-01T22:58:27.081Z",
-      "rung7Seconds": 1285,
+      "rung7Seconds": 1987649,
       "log": [
         {
           "at": "2026-09-27T14:39:28.502Z",
@@ -560,6 +560,11 @@
         },
         {
           "at": "2026-10-01T23:19:52.391Z",
+          "rung": 7,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-24T23:05:56.127Z",
           "rung": 7,
           "event": "pass"
         }
@@ -948,6 +953,54 @@
           "at": "2026-10-19T21:33:39.545Z",
           "rung": 2,
           "event": "pass"
+        }
+      ]
+    },
+    "structures/backtracking/02-all-simple-paths-iterative": {
+      "rung": 6,
+      "cleared": 5,
+      "failStreak": 1,
+      "hints": 0,
+      "regressions": 0,
+      "rung5StartedAt": null,
+      "rung5Seconds": null,
+      "rung7StartedAt": null,
+      "rung7Seconds": null,
+      "log": [
+        {
+          "at": "2026-10-24T22:01:48.166Z",
+          "rung": 1,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-24T22:02:19.365Z",
+          "rung": 2,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-24T23:06:36.432Z",
+          "rung": 3,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-25T01:25:08.633Z",
+          "rung": 4,
+          "event": "fail"
+        },
+        {
+          "at": "2026-10-25T01:27:38.540Z",
+          "rung": 4,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-25T16:56:10.631Z",
+          "rung": 5,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-25T17:34:53.068Z",
+          "rung": 6,
+          "event": "fail"
         }
       ]
     }

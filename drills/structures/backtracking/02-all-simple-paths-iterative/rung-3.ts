@@ -14,7 +14,23 @@ export function allSimplePathsIterative(graph: Adjacency, start: number, target:
   active[start] = true;
   const frames: { vertex: number; next: number }[] = [{ vertex: start, next: 0 }];
 
-  TODO("explore every eligible path and restore the active state when each visit finishes");
+  while (frames.length > 0) {
+    const frame = frames[frames.length - 1]!;
+    if (frame?.vertex === target || frame.next === graph[frame.vertex]?.length) {
+      if (frame.vertex === target) paths.push([...path]);
+      active[frame.vertex] = false;
+      path.pop();
+      frames.pop();
+    } else {
+      const w = graph[frame.vertex]![frame.next]!;
+      frame.next++;
+      if (!active[w]) {
+        active[w] = true;
+        path.push(w);
+        frames.push({vertex: w, next: 0});
+      }
+    }
+  }
 
   return paths;
 }

@@ -14,5 +14,29 @@ import type { Adjacency } from "../spec.ts";
  * V, S, L are defined in ../API.md.
  */
 export function allSimplePathsIterative(graph: Adjacency, start: number, target: number): number[][] {
-  return TODO("the complete operation body");
+  const active = new Array<boolean>(graph.length).fill(false);
+  const path: number[] = [start];
+  active[start] = true;
+  const paths: number[][] = [];
+  const frames: {vertex: number, next: number}[] = [{vertex: start, next: 0}];
+
+  while (frames.length > 0) {
+    const frame = frames[frames.length - 1]!;
+    if (frame?.vertex === target || frame?.next === graph[frame?.vertex!]!.length) {
+      if (frame.vertex === target) paths.push([...path]);
+      active[frame.vertex] = false;
+      path.pop();
+      frames.pop();
+    } else {
+      const w = graph[frame?.vertex!]![frame?.next!]!;
+      frame.next++;
+      if (!active[w]) {
+        active[w] = true;
+        path.push(w);
+        frames.push({vertex: w, next: 0});
+      }
+    }
+  }
+
+  return paths;
 }
