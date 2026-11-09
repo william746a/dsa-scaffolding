@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "current": "structures/backtracking/02-all-simple-paths-iterative",
+  "current": "structures/topological-sort/02-topological-sort",
   "drills": {
     "structures/insertion-sort-linked-list/01-insert-into-sorted": {
       "rung": 5,
@@ -934,29 +934,6 @@
       ]
     },
     "structures/backtracking/02-all-simple-paths-iterative": {
-      "rung": 3,
-      "cleared": 2,
-      "failStreak": 0,
-      "hints": 0,
-      "regressions": 0,
-      "rung5StartedAt": null,
-      "rung5Seconds": null,
-      "rung7StartedAt": null,
-      "rung7Seconds": null,
-      "log": [
-        {
-          "at": "2026-10-19T21:29:25.876Z",
-          "rung": 1,
-          "event": "pass"
-        },
-        {
-          "at": "2026-10-19T21:33:39.545Z",
-          "rung": 2,
-          "event": "pass"
-        }
-      ]
-    },
-    "structures/backtracking/02-all-simple-paths-iterative": {
       "rung": 6,
       "cleared": 5,
       "failStreak": 1,
@@ -1001,6 +978,92 @@
           "at": "2026-10-25T17:34:53.068Z",
           "rung": 6,
           "event": "fail"
+        }
+      ]
+    },
+    "structures/topological-sort/01-in-degrees": {
+      "rung": 5,
+      "cleared": 4,
+      "failStreak": 0,
+      "hints": 0,
+      "regressions": 0,
+      "rung5StartedAt": null,
+      "rung5Seconds": null,
+      "rung7StartedAt": null,
+      "rung7Seconds": null,
+      "log": [
+        {
+          "at": "2026-10-25T17:42:13.927Z",
+          "rung": 1,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-26T00:27:59.765Z",
+          "rung": 2,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-26T00:32:37.894Z",
+          "rung": 3,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-26T00:36:11.592Z",
+          "rung": 4,
+          "event": "pass"
+        }
+      ]
+    },
+    "structures/topological-sort/02-topological-sort": {
+      "rung": 6,
+      "cleared": 5,
+      "failStreak": 0,
+      "hints": 1,
+      "regressions": 0,
+      "rung5StartedAt": null,
+      "rung5Seconds": null,
+      "rung7StartedAt": null,
+      "rung7Seconds": null,
+      "log": [
+        {
+          "at": "2026-10-26T00:40:50.468Z",
+          "rung": 1,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-26T22:36:52.642Z",
+          "rung": 2,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-26T23:21:08.059Z",
+          "rung": 3,
+          "event": "pass"
+        },
+        {
+          "at": "2026-10-31T17:03:05.211Z",
+          "rung": 4,
+          "event": "fail"
+        },
+        {
+          "at": "2026-10-31T17:03:23.665Z",
+          "rung": 4,
+          "event": "hint"
+        },
+        {
+          "at": "2026-10-31T21:02:05.073Z",
+          "rung": 4,
+          "event": "pass"
+        },
+        {
+          "at": "2026-11-07T22:11:59.856Z",
+          "rung": 5,
+          "event": "fail"
+        },
+        {
+          "at": "2026-11-07T22:16:23.376Z",
+          "rung": 5,
+          "event": "pass"
         }
       ]
     }
